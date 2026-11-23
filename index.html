@@ -3,73 +3,312 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090d1a">
 <title>BOND AI STUDIO</title>
 <style>
-body{
- margin:0;
- font-family:Arial;
- background:#090d1a;
- color:white;
- text-align:center;
+:root {
+--bg:#090d1a;
+--panel:#111a30;
+--cyan:#00e5ff;
+--purple:#8b5cf6;
+--muted:#a9b7d0;
 }
-header{padding:25px;background:#111a30}
-h1{color:#00e5ff;font-size:30px}
-.hero{padding:65px 20px}
-.hero h2{font-size:38px}
-.hero p{color:#b9c5d9;line-height:1.7}
-.products{padding:25px}
-.card{
- background:#17223a;
- margin:18px auto;
- padding:25px;
- border-radius:15px;
- max-width:340px;
+* {box-sizing:border-box}
+body {
+margin:0;
+font-family:Arial,sans-serif;
+background:radial-gradient(circle at 50% -10%,#18335b,#090d1a 48%);
+color:white;
+min-height:100vh;
 }
-button{
- background:#00d9ff;
- color:#07101b;
- border:0;
- padding:14px 25px;
- border-radius:8px;
- font-weight:bold;
+header {
+padding:25px 15px;
+text-align:center;
+background:#111a30;
 }
-footer{padding:30px;color:#aaa}
+.brand {
+font-size:32px;
+font-weight:900;
+color:var(--cyan);
+}
+.tagline {
+color:var(--muted);
+margin-top:8px;
+font-size:13px;
+}
+main {
+max-width:850px;
+margin:auto;
+padding:20px 15px;
+}
+.hero {
+text-align:center;
+padding:25px 5px;
+}
+.hero h1 {font-size:30px}
+.hero p {color:var(--muted);line-height:1.6}
+.tabs {
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-bottom:15px;
+}
+.tab {
+padding:16px 8px;
+border:1px solid #263653;
+border-radius:12px;
+background:#111a30;
+color:white;
+font-weight:bold;
+}
+.tab.active {
+border-color:var(--cyan);
+color:var(--cyan);
+background:#073047;
+}
+.card {
+background:#111a30;
+border:1px solid #263653;
+border-radius:16px;
+padding:18px;
+margin-bottom:15px;
+}
+label {
+display:block;
+font-weight:bold;
+margin-bottom:10px;
+}
+textarea,select {
+width:100%;
+padding:13px;
+border-radius:10px;
+border:1px solid #30415f;
+background:#080f1e;
+color:white;
+font-size:15px;
+}
+textarea {
+height:120px;
+resize:vertical;
+}
+.hint {
+font-size:12px;
+color:var(--muted);
+margin-top:8px;
+line-height:1.5;
+}
+.upload {
+padding:22px;
+border:2px dashed #466080;
+border-radius:12px;
+text-align:center;
+cursor:pointer;
+}
+.upload input {display:none}
+#preview {
+display:none;
+max-width:100%;
+max-height:250px;
+margin:15px auto;
+border-radius:10px;
+}
+.grid {
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+.btn {
+width:100%;
+padding:16px;
+border:0;
+border-radius:12px;
+background:linear-gradient(90deg,#00e5ff,#70f0ff);
+color:#06111c;
+font-weight:bold;
+font-size:16px;
+margin-top:18px;
+}
+.output {
+display:none;
+white-space:pre-wrap;
+background:#080f1e;
+padding:15px;
+border-radius:10px;
+margin-top:15px;
+line-height:1.6;
+}
+.notice {
+background:#302817;
+color:#f7e8bd;
+padding:12px;
+border-radius:10px;
+font-size:13px;
+line-height:1.5;
+margin-top:15px;
+}
+footer {
+text-align:center;
+color:#8494af;
+padding:25px;
+font-size:12px;
+}
+.hidden {display:none}
+@media(max-width:500px) {
+.grid {grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
+
 <header>
-<h1>BOND AI STUDIO</h1>
-<p>DIGITAL STORE</p>
+<div class="brand">✦ BOND AI STUDIO</div>
+<div class="tagline">CREATE • IMAGINE • INSPIRE</div>
 </header>
+
+<main>
 <section class="hero">
-<h2>Cipta Lebih Pantas Dengan AI!</h2>
-<p>Selamat datang ke kedai digital BOND AI STUDIO.
-Temui koleksi prompt AI, template Facebook
-dan produk digital kreatif.</p>
-<button onclick="document.getElementById('produk').scrollIntoView()">LIHAT PRODUK</button>
+<h1>SELAMAT DATANG</h1>
+<p>Studio Kreatif AI Anda. Cipta idea gambar dan video dengan bantuan teknologi AI.</p>
 </section>
-<section class="products" id="produk">
-<h2>PRODUK DIGITAL</h2>
-<div class="card">
-<h3>50 Template Caption Facebook</h3>
-<p>Harga: RM19.90</p>
-<button onclick="alert('Sistem pembayaran sedang disediakan')">BELI SEKARANG</button>
+
+<div class="tabs">
+<button class="tab active" id="imageTab" onclick="switchMode('image')">🖼️ AI IMAGE</button>
+<button class="tab" id="videoTab" onclick="switchMode('video')">🎬 AI VIDEO</button>
 </div>
-<div class="card">
-<h3>50 Prompt Video AI</h3>
-<p>Harga: RM15.90</p>
-<button onclick="alert('Sistem pembayaran sedang disediakan')">BELI SEKARANG</button>
+
+<section class="card">
+<label id="promptLabel">Arahan Prompt Gambar</label>
+<textarea id="prompt" placeholder="Tulis idea gambar atau video anda di sini..."></textarea>
+<div class="hint">Terangkan idea, suasana dan gaya yang anda mahukan.</div>
+</section>
+
+<section class="card">
+<label>Muat Naik Foto</label>
+<label class="upload" for="photo">
+<span style="color:#00e5ff">＋ PILIH FOTO</span>
+<div class="hint">Pilih gambar daripada telefon anda.</div>
+<input type="file" id="photo" accept="image/*">
+</label>
+<img id="preview" alt="Pratonton foto">
+<div class="hint" id="fileName">Belum ada foto dipilih.</div>
+</section>
+
+<section class="card">
+<div class="grid">
+<div>
+<label>Nisbah Aspek</label>
+<select id="ratio">
+<option>9:16</option>
+<option>16:9</option>
+<option>1:1</option>
+<option>4:5</option>
+</select>
 </div>
-<div class="card">
-<h3>Bundle Digital Creator</h3>
-<p>Harga: RM29.90</p>
-<button onclick="alert('Sistem pembayaran sedang disediakan')">BELI SEKARANG</button>
+
+<div id="durationBox" class="hidden">
+<label>Durasi Video</label>
+<select id="duration">
+<option>5 saat</option>
+<option selected>10 saat</option>
+<option>15 saat</option>
+<option>30 saat</option>
+</select>
+</div>
+
+<div id="styleBox">
+<label>Gaya Gambar</label>
+<select id="style">
+<option>Realistik</option>
+<option>Sinematik</option>
+<option>Kartun 3D</option>
+<option>Anime</option>
+<option>Fantasi</option>
+</select>
+</div>
+</div>
+
+<button class="btn" onclick="prepareProject()">✨ SEDIAKAN PROJEK AI</button>
+<div id="output" class="output"></div>
+
+<div class="notice">
+<strong>Makluman:</strong> Versi asas ini menyediakan prompt projek. Untuk menghasilkan gambar dan video AI sebenar, sambungan API AI diperlukan.
 </div>
 </section>
+</main>
+
 <footer>
 © 2026 BOND AI STUDIO
-<br>Malaysia
+<br>CREATE • IMAGINE • INSPIRE
 </footer>
+
+<script>
+let mode = "image";
+
+function switchMode(next) {
+mode = next;
+
+document.getElementById("imageTab").classList.toggle("active",mode==="image");
+document.getElementById("videoTab").classList.toggle("active",mode==="video");
+
+document.getElementById("promptLabel").textContent =
+mode==="image" ? "Arahan Prompt Gambar" : "Arahan Prompt Video";
+
+document.getElementById("durationBox").classList.toggle("hidden",mode!=="video");
+document.getElementById("styleBox").classList.toggle("hidden",mode==="video");
+
+document.getElementById("output").style.display="none";
+}
+
+document.getElementById("photo").addEventListener("change",function(e){
+const file=e.target.files[0];
+if(!file)return;
+
+if(!file.type.startsWith("image/")){
+alert("Sila pilih gambar.");
+return;
+}
+
+const preview=document.getElementById("preview");
+if(preview.dataset.url)URL.revokeObjectURL(preview.dataset.url);
+
+const url=URL.createObjectURL(file);
+preview.src=url;
+preview.dataset.url=url;
+preview.style.display="block";
+
+document.getElementById("fileName").textContent="Foto: "+file.name;
+});
+
+function prepareProject(){
+const prompt=document.getElementById("prompt").value.trim();
+
+if(!prompt){
+alert("Sila tulis prompt terlebih dahulu.");
+return;
+}
+
+const ratio=document.getElementById("ratio").value;
+
+let details="Jenis: AI Image\nGaya: "+document.getElementById("style").value;
+
+if(mode==="video"){
+details="Jenis: AI Video\nDurasi: "+document.getElementById("duration").value;
+}
+
+const result=
+"BOND AI STUDIO\n\n"+
+details+
+"\nNisbah: "+ratio+
+"\n\nPROMPT:\n"+prompt+
+"\n\nSambungan API AI diperlukan untuk menjana media sebenar.";
+
+const output=document.getElementById("output");
+output.textContent=result;
+output.style.display="block";
+output.scrollIntoView({behavior:"smooth"});
+}
+</script>
+
 </body>
 </html>
